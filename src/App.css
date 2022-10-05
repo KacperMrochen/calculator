@@ -1,27 +1,24 @@
-.App {
-  text-align: center;
+* {
+  font-family: myFirstFont;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App {
+  background-image: url(background.jpg);
+  background-repeat: no-repeat;
+  background-position: fixed;
+  background-size: 100%;
+  height: 100vh;
+}
+
+@font-face {
+  font-family: myFirstFont;
+  src: url(PressStart2P-Regular.ttf);
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
@@ -35,4 +32,100 @@
   to {
     transform: rotate(360deg);
   }
+}
+.calculator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 300px;
+  background-color: rgb(236, 233, 216);
+  border-bottom: 20px;
+  border-color: linear-gradient(red, green);
+}
+
+.top-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 2px;
+  font-size: 16px;
+}
+
+.left, .right {
+  gap: 2px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.display {
+  background-color: #FFFFFF;
+  border: 2px solid #7F9DB9;
+  border-collapse: collapse;
+  margin: 10px;
+  padding: 5px;
+  text-align: right;
+}
+
+.display *  { 
+  padding: 5px;
+}
+
+.live {
+  overflow-x: scroll;
+}
+
+.result {
+  overflow-x: scroll;
+}
+
+.memory-keys {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.key {
+  background-color: #F9F9F6;
+  border: 1px solid #003C74;
+  border-radius: 3px;
+  width: 50px;
+  height: 45px;
+  margin: 5px;
+}
+
+.calc { 
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+}
+
+.row-5 {
+  width: 230px;
+  height: 45px;
+  margin: 5px;
+}
+
+.operators {
+  display: flex;
+  flex-direction: column;
+}
+
+.op {
+  color: RGB(255,0,0);
+}
+
+.divide {
+  font-weight: 1000;
+}
+
+.number {
+  color: rgb(0, 0, 255);
 }
