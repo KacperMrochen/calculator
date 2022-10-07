@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import React from 'react';
 import './App.css';
 
@@ -6,6 +6,7 @@ function App() {
   const [result, setResult] = useState("");
   const [math, setMath] = useState("");
   const [usedPoint, setUsedPoint] = useState(false);
+  const [date, setDate] = useState(new Date());
 
   const symbol = ["/", "*", "+", "-"];
   const number = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
@@ -62,7 +63,7 @@ function App() {
     }
 
   }
-
+  
   //reseting
 
   const clear = () => {
@@ -71,6 +72,13 @@ function App() {
     setUsedPoint("");
   }
 
+  //time config 
+
+  useEffect(() =>
+  {
+    setInterval(() => setDate(new Date()), 60000);
+  }, [])
+  
   //to do memory logic + set to negative
 
   return (
@@ -101,7 +109,6 @@ function App() {
             <button className="key op">M+</button>
           </div>
           <div className="block">
-            
             <div className="numbers">
               <button className="key number row-1" onClick={someMath} value="9">9</button>
               <button className="key number row-1" onClick={someMath} value="8">8</button>
@@ -129,9 +136,20 @@ function App() {
       </div>
     </div>
     <div className='start bar'>
-      <div className='Start-btn'></div>
-      <div className='calculator app'></div>
-      <div className='time'></div>
+      <div className='left'>
+        <div className='start-btn'></div>
+        <div className='calculator app'></div>
+      </div>
+      <div className='right'>
+        <div className='time'>
+          {date.toLocaleString('en-US', {
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: false,
+            })
+          }
+        </div>
+      </div>
     </div>
   </div>
   );

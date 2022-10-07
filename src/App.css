@@ -1,4 +1,4 @@
-* {
+.calculator, .key, .row-5{
   font-family: myFirstFont;
 }
 
@@ -128,4 +128,38 @@
 
 .number {
   color: rgb(0, 0, 255);
+}
+
+.bar {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  bottom: 0px;
+  height: 30px;
+  width: 100vw;
+  background: linear-gradient( to bottom,#468FE6 -10%, #2258D6, #2663E0, #1B47AF);
+  color: white;
+  font-family: Tahoma;
+  font-weight: 400;
+}
+
+.start-btn {
+  width: 90px;
+  height: 30px;
+  background-size: 100%;
+  background-image: url(./start.png);
+  background-repeat: no-repeat;
+  background-position: top;
+}
+
+.start-btn:hover {
+  background-position: center;
+}
+
+.start-btn:active {
+  background-position-y: bottom;
+}
+
+.time {
+  margin-right: 10px;
 }
