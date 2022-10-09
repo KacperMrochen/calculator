@@ -3,19 +3,21 @@ import React from 'react';
 import './App.css';
 
 function App() {
+  const [memory, setMemory] = useState("");
   const [result, setResult] = useState("");
   const [math, setMath] = useState("");
   const [usedPoint, setUsedPoint] = useState(false);
   const [date, setDate] = useState(new Date());
 
-  const symbol = ["/", "*", "+", "-"];
+  const symbol = ["/", "*", "+"];
+  const negative = "-";
   const number = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
   const point = ".";
   
   //Show result
 
   const calculate = () => {
-    if(math === "0" || math==="") {
+    if(math === "0" || math==="" || negative.includes(math.at(-2))) {
       return 0;
     } else {
       setResult(eval(math).toString());
@@ -40,11 +42,13 @@ function App() {
     if(
       (math === "0" && handleMath ==="0" && usedPoint === false) || // math = "00"
       (math === "" && symbol.includes(handleMath)) || //math = "/ ..."
+      (negative.includes(math.at(-4)) && negative.includes(handleMath.at(-2))) || 
       (symbol.includes(handleMath) && symbol.includes(math.at(-1))) || // math = "... // ..."
       (point.includes(handleMath) && point.includes(math.at(-1))) || // math = "'.' ..."
       (symbol.includes(handleMath) && point.includes(math.at(-1))) || // math = "/. ..."
       (point.includes(handleMath) && symbol.includes(math.at(-1))) || //math = "./ ..."
-      (symbol.includes(math.at(-2)) && math.at(-1) === "0" && handleMath === "0") // math = "... / 00"
+      (symbol.includes(math.at(-2)) && math.at(-1) === "0" && handleMath === "0")// math = "... / 00"
+      
       ) {    
       return;
     } else if(math === "0" && number.includes(handleMath) && usedPoint === false) {
@@ -55,8 +59,8 @@ function App() {
       setMath(math+handleMath);
     }
 
-    // calculate on the result
-
+    // calculate after the result
+    
     if(result!== "" && symbol.includes(handleMath)) {
       setMath(eval(math) + handleMath);
       setResult("");
@@ -79,7 +83,42 @@ function App() {
     setInterval(() => setDate(new Date()), 60000);
   }, [])
   
-  //to do memory logic + set to negative
+
+
+  //memory 
+
+  const showClearMemory = () => {
+    if((memory!=="" && result!=="") || (memory!=="" && result ==="")){
+      setResult(memory);
+      setMath("");
+    } 
+
+    if(memory===result) {
+      setMemory("");
+    }
+  }
+
+  const minusMemory = () => {
+    if(result!=="" && memory!=="") {
+      setMemory(eval(memory+"-"+result));
+      setResult("");
+      setMath("");
+    }
+  }
+
+  const plusMemory = () => {
+    if(result!=="" && memory===""){
+      setMemory(result);
+      setResult("");
+      setMath("");
+    } else if(result!=="" && memory!=="") {
+      setMemory(eval(memory+"+"+result));
+      setResult("");
+      setMath("");
+    }
+  }
+
+    //to do set to negative (in proggres)
 
   return (
     <div className="App">
@@ -98,15 +137,15 @@ function App() {
           </div>
         </div>
         <div className="display">
-          <div className="live">{math ? math : "0"}</div>
-          <div className="result">{result ? result : "0"}<span>=</span></div>
+          <div className="live">{math ? math.replace(/\s/g, '') : "0"}</div>
+          <div className="result" title={memory}>{result ? result : "0"}<span>=</span></div>
         </div>
         <div className="keyboard">
           <div className="memory-keys">
             <button className="key op" onClick={clear}>C</button>
-            <button className="key op">MRC</button>
-            <button className="key op">M-</button>
-            <button className="key op">M+</button>
+            <button className="key op" onClick={showClearMemory}>MRC</button>
+            <button className="key op" onClick={minusMemory}>M-</button>
+            <button className="key op" onClick={plusMemory}>M+</button>
           </div>
           <div className="block">
             <div className="numbers">
@@ -121,37 +160,34 @@ function App() {
               <button className="key number row-3" onClick={someMath} value="1">1</button><br/>
               <button className="key number row-4" onClick={someMath} value="." disabled={usedPoint}>.</button>
               <button className="key number row-4" onClick={someMath} value="0">0</button>
-              <button className="key number row-4" >+/-</button><br/>  
+              <button className="key number row-4" onClick={calculate}>=</button>
             </div>
             <div className="operators">
               <button className="key op divide" onClick={someMath} value="/">/</button>
               <button className="key op multiply" onClick={someMath} value="*">x</button>
               <button className="key op plus" onClick={someMath} value="+">+</button>
-              <button className="key op minus" onClick={someMath } value="-">-</button>
+              <button className="key op minus" onClick={someMath} value="- ">-</button>
             </div>
-        </div>
-        <div className="calc">
-          <button className="row-5" onClick={calculate} key="done" >=</button>
+          </div>
         </div>
       </div>
-    </div>
-    <div className='start bar'>
-      <div className='left'>
-        <div className='start-btn'></div>
-        <div className='calculator app'></div>
-      </div>
-      <div className='right'>
-        <div className='time'>
-          {date.toLocaleString('en-US', {
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: false,
-            })
-          }
+      <div className='start bar'>
+        <div className='left'>
+          <div className='start-btn'></div>
+          <div className='calculator app'></div>
+        </div>
+        <div className='right'>
+          <div className='time'>
+            {date.toLocaleString('en-US', {
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: false,
+              })
+            }
+          </div>
         </div>
       </div>
     </div>
-  </div>
   );
 }
 
