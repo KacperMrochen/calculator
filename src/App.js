@@ -1,5 +1,7 @@
 import {useEffect, useState} from 'react';
 import React from 'react';
+import Draggable, {DraggableCore} from 'react-draggable';
+
 import './App.css';
 
 function App() {
@@ -8,6 +10,8 @@ function App() {
   const [math, setMath] = useState("");
   const [usedPoint, setUsedPoint] = useState(false);
   const [date, setDate] = useState(new Date());
+
+  //regex
 
   const symbol = ["/", "*", "+"];
   const negative = "-";
@@ -23,6 +27,8 @@ function App() {
       setResult(eval(math).toString());
     }
   }
+  
+  //handling user input
 
   const someMath = (e) => {
 
@@ -48,7 +54,6 @@ function App() {
       (symbol.includes(handleMath) && point.includes(math.at(-1))) || // math = "/. ..."
       (point.includes(handleMath) && symbol.includes(math.at(-1))) || //math = "./ ..."
       (symbol.includes(math.at(-2)) && math.at(-1) === "0" && handleMath === "0")// math = "... / 00"
-      
       ) {    
       return;
     } else if(math === "0" && number.includes(handleMath) && usedPoint === false) {
@@ -63,7 +68,7 @@ function App() {
     
     if(result!== "" && symbol.includes(handleMath)) {
       setMath(eval(math) + handleMath);
-      setResult("");
+      setResult("");  
     }
 
   }
@@ -118,10 +123,15 @@ function App() {
     }
   }
 
-    //to do set to negative (in proggres)
+  //to do: claculator code refactoring + new features (new app) + app start tab
 
   return (
     <div className="App">
+      <Draggable
+      defaultPosition={{x: -150, y: -200}}
+      bounds="parent"
+      handle='.top-bar'
+      >
       <div className="calculator">
         <div className="top-bar">
           <div className="right">
@@ -171,6 +181,7 @@ function App() {
           </div>
         </div>
       </div>
+      </Draggable>
       <div className='start bar'>
         <div className='left'>
           <div className='start-btn'></div>

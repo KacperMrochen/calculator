@@ -59,6 +59,24 @@
   align-items: center;
 }
 
+.start .right {
+  background-color: #0C8DE9
+}
+
+.start .right::before {
+  position: relative;
+  content: '<';
+  width: 20px;
+  border: 1px solid white;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-image: linear-gradient(to bottom, blue, aqua);
+  left: -10px;
+}
+
 .display {
   background-color: #FFFFFF;
   border: 2px solid #7F9DB9;
